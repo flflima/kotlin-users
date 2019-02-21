@@ -12,11 +12,11 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    
     compile 'io.javalin:javalin:2.6.0'
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "org.slf4j:slf4j-simple:1.7.25"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
-
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
 
     testCompile "org.junit.jupiter:junit-jupiter-api:5.3.1"

@@ -9,14 +9,14 @@ class User {
     var email: String = ""
     var password: String = ""
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
-    var created: Date = Date()
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
+//    var created: Date = Date()
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
-    var modified: Date = Date()
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
+//    var modified: Date = Date()
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
-    var lastLogin: Date = Date()
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Sao_Paulo")
+//    var lastLogin: Date = Date()
 
     var token: String = ""
     var phones: List<Phone> = mutableListOf()
