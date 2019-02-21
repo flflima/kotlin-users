@@ -2,6 +2,8 @@ package main
 
 import br.com.dev.users.controller.UserController
 import br.com.dev.users.model.User
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.javalin.Javalin
 
 // Main.kt
@@ -24,13 +26,15 @@ class JavalinApp(private val port: Int) {
         app.routes {
             app.post("/users") { ctx ->
                 val user = ctx.body<User>()
-                println("-----------------------------------------")
-                println(user.email)
                 controller.createUser(user)
                 ctx.status(201)
+                ctx.json(user)
             }
         }
 
         return app
     }
 }
+
+inline fun <reified T : Any> String.deserialize(): T =
+    jacksonObjectMapper().readValue(this)
