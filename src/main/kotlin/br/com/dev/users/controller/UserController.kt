@@ -30,4 +30,11 @@ class UserController {
         userService.save(user)
     }
 
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun login(user: User): User {
+        return userService.getAllUsers().filter { it.key == user.id.toInt() }.map { it.value }[0]
+    }
+
 }

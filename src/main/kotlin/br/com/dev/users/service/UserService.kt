@@ -17,4 +17,8 @@ class UserService {
         }.count() > 0
     }
 
+    fun getAllUsers(): MutableMap<Int, User> {
+        return userDAO.users
+    }
+
 }

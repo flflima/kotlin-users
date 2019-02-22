@@ -8,8 +8,7 @@ import main.br.com.dev.users.model.Message
 import main.deserialize
 import org.json.JSONObject
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
@@ -19,6 +18,7 @@ class TestIntegration {
     private val logger = LoggerFactory.getLogger(TestIntegration::class.java)
 
     private val url = "http://localhost:8000/users"
+    private val urlLogin = "http://localhost:8000/login"
 
     private lateinit var app: Javalin
 
@@ -85,5 +85,26 @@ class TestIntegration {
         val responseMessage = response2.text.deserialize<Message>()
 
         assertEquals("E-mail já existente", responseMessage.mensagem)
+    }
+
+    @Test
+    fun `when login return success code`() {
+        val user = User("fulano.de.tal@email.com", "123456789")
+        khttp.post(url = url, data = JSONObject(user))
+
+        val response = khttp.post(url = urlLogin, data = JSONObject(user))
+
+        assertEquals(200, response.statusCode)
+    }
+
+    @Test
+    fun `when login and user exists return user`() {
+        val user = User("fulano.de.tal@email.com", "123456789")
+        khttp.post(url = url, data = JSONObject(user))
+
+        val response = khttp.post(url = urlLogin, data = JSONObject(user))
+        val userCad = response.text.deserialize<User>()
+
+        assertNotNull(userCad)
     }
 }

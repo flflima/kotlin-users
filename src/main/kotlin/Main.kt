@@ -32,10 +32,16 @@ class JavalinApp(private val port: Int) {
                 ctx.status(201)
                 ctx.json(user)
             }
+
+            app.post("/login") { ctx ->
+                val user = ctx.body<User>()
+                ctx.json(controller.login(user))
+                ctx.status(200)
+            }
         }
 
-        app.exception(IllegalArgumentException::class.java) {
-            e, ctx -> ctx.status(500)
+        app.exception(IllegalArgumentException::class.java) { e, ctx ->
+            ctx.status(500)
             ctx.json(Message(e.message.toString()))
         }
 
