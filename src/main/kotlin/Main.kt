@@ -5,6 +5,8 @@ import br.com.dev.users.model.User
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.javalin.Javalin
+import main.br.com.dev.users.model.Message
+import java.lang.IllegalArgumentException
 
 // Main.kt
 fun main() {
@@ -30,6 +32,11 @@ class JavalinApp(private val port: Int) {
                 ctx.status(201)
                 ctx.json(user)
             }
+        }
+
+        app.exception(IllegalArgumentException::class.java) {
+            e, ctx -> ctx.status(500)
+            ctx.json(Message(e.message.toString()))
         }
 
         return app

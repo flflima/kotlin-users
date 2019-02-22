@@ -1,6 +1,10 @@
 package br.com.dev.users.controller
 
 import br.com.dev.users.model.User
+import main.br.com.dev.users.dao.UserDAO
+import main.br.com.dev.users.service.PhoneService
+import main.br.com.dev.users.service.UserService
+import java.lang.IllegalArgumentException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.ws.rs.Consumes
@@ -11,15 +15,19 @@ import javax.ws.rs.Produces
 @Path("/users")
 class UserController {
 
-    var users = mutableMapOf<Int, User>()
-    var lastId = 1
+    var userService = UserService()
+    var phoneService = PhoneService()
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
     fun createUser(user: User) {
-        user.id = lastId.toString()
-        users[lastId++] = user
+        if (userService.emailExists(user)) {
+            throw IllegalArgumentException("E-mail já existente")
+        }
+
+        phoneService.save(user.phones)
+        userService.save(user)
     }
 
 }
